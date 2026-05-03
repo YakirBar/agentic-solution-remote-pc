@@ -20,7 +20,7 @@ services:
       POSTGRES_PASSWORD: sso_pass
       POSTGRES_DB: sso_db
     ports:
-      - "5433:5432"
+      - "5432:5432"
     volumes:
       - lab9_2_pg_data:/var/lib/postgresql/data
     restart: unless-stopped
