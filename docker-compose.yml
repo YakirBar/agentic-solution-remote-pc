@@ -1,5 +1,6 @@
 services:
   client:
+    restart: always
     image: yakirbartech/agentic-client:0.1  
     container_name: client
     ports:
@@ -8,6 +9,7 @@ services:
       - backend
 
   backend:
+    restart: always
     image: yakirbartech/agentic-backend:0.1  
     container_name: backend
     ports:
@@ -19,6 +21,7 @@ services:
       PG_PORT: 5432
 
   postgres:
+    restart: always
     image: pgvector/pgvector:pg16
     container_name: postgres
     ports:
@@ -31,6 +34,7 @@ services:
       POSTGRES_DB: sso_db
 
   pgadmin:
+    restart: always
     image: dpage/pgadmin4:latest
     container_name: pgadmin
     ports:
@@ -43,6 +47,19 @@ services:
       PGADMIN_DEFAULT_EMAIL: admin@example.com
       PGADMIN_DEFAULT_PASSWORD: admin
 
+  n8n:
+    restart: always
+    image: docker.n8n.io/n8nio/n8n
+    command: start --tunnel
+    container_name: n8n
+    ports:
+      - "5678:5678"
+    volumes:
+      - n8n_data:/home/node/.n8n
+    environment:
+      - N8N_SECURE_COOKIE=false
+
 volumes:
-  postgres_data:
+  n8n_data:
   pgadmin_data:
+  postgres_data:
